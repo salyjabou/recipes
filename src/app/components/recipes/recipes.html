@@ -1,3 +1,12 @@
+<div class="search-container">
+
+  <input
+    type="text"
+    placeholder="Search a recipe..."
+    [(ngModel)]="searchTerm"
+    (input)="onSearch()"
+  />
+</div>
 <div class="recipes-container">
 @for(recipe of recipes; track recipe.idMeal) {
   <div class="recipe-card" (click)="goToDetails(recipe.idMeal)">

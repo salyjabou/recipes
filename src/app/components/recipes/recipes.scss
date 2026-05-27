@@ -22,3 +22,17 @@
     padding: 1rem;
   }
 }
+
+.search-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-container input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
