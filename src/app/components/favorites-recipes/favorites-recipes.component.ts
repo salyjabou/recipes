@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecipeService } from '../../services/recipe.service';
 import { StorageService } from '../../services/storage.service';
@@ -15,6 +15,8 @@ export class FavoritesRecipesComponent implements OnInit {
 
   private storageService = inject(StorageService);
   private recipeService = inject(RecipeService);
+  private cdr =  inject(ChangeDetectorRef);
+
 
   favorites: any[] = [];
   loading = false;
@@ -49,6 +51,7 @@ export class FavoritesRecipesComponent implements OnInit {
               this.favorites.push(recipe);
             }
           });
+             this.cdr.detectChanges();
             this.loading = false;
           },
           error: () => {

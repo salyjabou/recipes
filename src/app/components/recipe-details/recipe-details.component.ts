@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
@@ -14,6 +14,8 @@ export class RecipeDetailsComponent implements OnInit {
 
   private route = inject(ActivatedRoute);
   private recipeService = inject(RecipeService);
+  private cdr =  inject(ChangeDetectorRef);
+
 
   recipe: any = null;
   loading = false;
@@ -34,6 +36,7 @@ export class RecipeDetailsComponent implements OnInit {
       .subscribe({next: (res: any) => {
           this.recipe = res?.meals?.[0];
           this.loading = false;
+          this.cdr.detectChanges();
         },
         error: () => {
           this.recipe = null;

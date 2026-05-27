@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Recipe } from '../../models/recipe.model';
 import { RecipeService } from '../../services/recipe.service';
@@ -17,6 +17,7 @@ export class RecipesComponent {
   private recipeService = inject(RecipeService);
   private router = inject(Router);
   private storageService = inject(StorageService);
+  private cdr =  inject(ChangeDetectorRef);
 
   recipes: Recipe[] = [];
   searchTerm: string = '';
@@ -26,6 +27,7 @@ export class RecipesComponent {
 
   selectedCategory: string = '';
 
+
   ngOnInit(): void {
 
      this.favorites = this.storageService.getFavorites();
@@ -33,6 +35,7 @@ export class RecipesComponent {
      this.recipeService.getRecipes().subscribe((response: any) => {
       this.allRecipes = response.meals ?? [];
       this.recipes = this.allRecipes.slice(0, 10);
+      this.cdr.detectChanges();
     });
 
      this.recipeService.getRecipesByCategories().subscribe((response: any) => {
