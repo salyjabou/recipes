@@ -14,6 +14,10 @@ export class RecipeService {
   }
 
   getRecipeById(id: string) {
-  return this.http.get<any>(`${this.apiUrl}/lookup.php?i=${id}`);
+      return this.http.get<any>(`${this.apiUrl}/lookup.php?i=${id}`);
+  }
+
+  getRecipesByCategories() {
+      return this.http.get<any>(`${this.apiUrl}/categories.php`);
   }
 }

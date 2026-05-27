@@ -7,6 +7,15 @@
     (input)="onSearch()"
   />
 </div>
+<div class="filter-container">
+  <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+    <option value="">All categories</option>
+    @for (cat of categories; track cat) {
+      <option [value]="cat">{{ cat }}</option>
+    }
+  </select>
+</div>
+<a class="favorite" routerLink="/favorites">My favorites recipes ❤️</a>
 <div class="recipes-container">
 @for(recipe of recipes; track recipe.idMeal) {
   <div class="recipe-card" (click)="goToDetails(recipe.idMeal)">
@@ -15,6 +24,11 @@
       <h2> {{ recipe.strMeal }} </h2>
       <p> {{ recipe.strCategory }} </p>
     </div>
+    <div class="actions">
+      <button (click)="addToFavorite(recipe.idMeal)"
+        [style.background]="favorites.includes(recipe.idMeal) ? 'red' : '#eee'"
+      >❤️</button>
+</div>
   </div>
 }
 </div>

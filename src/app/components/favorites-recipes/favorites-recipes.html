@@ -1,0 +1,23 @@
+<div class="main">
+    <h1>My Favorites Recipes ❤️</h1>
+
+    <div *ngIf="loading">Loading...</div>
+
+    <div class="recipes-container">
+
+      @for (recipe of favorites; track recipe.idMeal) {
+
+        <div class="recipe-card">
+          <img [src]="recipe.strMealThumb" />
+          <div class="content">
+            <h2>{{ recipe.strMeal }}</h2>
+            <p>{{ recipe.strCategory }}</p>
+          </div>
+        </div>
+
+      }
+    </div>
+    <div *ngIf="!loading && favorites.length === 0">
+      No favorites yet.
+    </div>
+</div>
