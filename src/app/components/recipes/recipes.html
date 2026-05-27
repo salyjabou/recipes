@@ -26,7 +26,7 @@
     </div>
     <div class="actions">
       <button (click)="addToFavorite(recipe.idMeal)"
-        [style.background]="favorites.includes(recipe.idMeal) ? 'red' : '#eee'"
+        [style.background]="isFavorite(recipe.idMeal) ? 'red' : '#eee'"
       >❤️</button>
 </div>
   </div>

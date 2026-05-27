@@ -25,30 +25,56 @@ export class FavoritesRecipesComponent implements OnInit {
 
   loadFavorites(): void {
 
-     const ids = this.storageService.getFavorites();
+     const favoritesData =
+      this.storageService.getFavorites();
 
-  if (!ids || ids.length === 0) {
-    this.favorites = [];
-    return;
-  }
-
-  this.loading = true;
-    forkJoin(
-      ids.map(id => this.recipeService.getRecipeById(id))
-    )
-    .subscribe({
-      next: (results: any[]) => {
-
-        this.favorites = results
-          .map(r => r?.meals?.[0])
-          .filter(r => r != null);
-
-        this.loading = false;
-      },
-      error: () => {
+      if (!favoritesData.length) {
         this.favorites = [];
-        this.loading = false;
+        return;
       }
-    });
-  }
+
+      this.loading = true;
+
+      forkJoin(
+          favoritesData.map(f => this.recipeService.getRecipeById(f.id)))
+        .subscribe({
+          next: (results: any[]) => {
+           this.favorites = [];
+
+          results.forEach((result: any, index) => {
+
+            if (result.meals) {
+              const recipe = result.meals[0];
+              recipe.rating = favoritesData[index].rating;
+              this.favorites.push(recipe);
+            }
+          });
+            this.loading = false;
+          },
+          error: () => {
+            this.favorites = [];
+            this.loading = false;
+          }
+        });
+ }
+
+  updateRating(id: string, rating: number): void {
+
+      const favorites = this.storageService.getFavorites();
+
+      favorites.forEach(favorite => {
+        if (favorite.id === id) {
+          favorite.rating = rating;
+        }
+      });
+
+      this.storageService.setFavorites(favorites);
+
+      this.favorites.forEach(recipe => {
+        if (recipe.idMeal === id) {
+          recipe.rating = rating;
+        }
+      });
+
+    }
 }

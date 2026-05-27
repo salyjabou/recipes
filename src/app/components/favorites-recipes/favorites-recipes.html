@@ -1,7 +1,9 @@
 <div class="main">
     <h1>My Favorites Recipes ❤️</h1>
 
-    <div *ngIf="loading">Loading...</div>
+    @if (loading) {
+      <p>Loading...</p>
+    }
 
     <div class="recipes-container">
 
@@ -12,12 +14,20 @@
           <div class="content">
             <h2>{{ recipe.strMeal }}</h2>
             <p>{{ recipe.strCategory }}</p>
+            <div class="rating">
+
+              @for (star of [1,2,3,4,5]; track star) {
+                <span
+                  (click)="updateRating(recipe.idMeal, star)">
+                  {{ star <= recipe.rating ? '⭐' : '☆' }}
+                </span>
+              }
+            </div>
           </div>
         </div>
-
       }
     </div>
-    <div *ngIf="!loading && favorites.length === 0">
-      No favorites yet.
-    </div>
+      @if (!loading && favorites.length === 0) {
+      <p>No favorites yet.</p>
+    }
 </div>

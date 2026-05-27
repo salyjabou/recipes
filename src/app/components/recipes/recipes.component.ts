@@ -22,7 +22,7 @@ export class RecipesComponent {
   searchTerm: string = '';
   allRecipes: any[] = [];
   categories: string[] = [];
-  favorites: string[] = [];
+  favorites: any[] = [];
 
   selectedCategory: string = '';
 
@@ -78,18 +78,26 @@ export class RecipesComponent {
   }
 
   addToFavorite(id: string): void {
-     const favorites = this.storageService.getFavorites();
+    const favorites =
+    this.storageService.getFavorites();
 
-     const index = favorites.indexOf(id);
+    const index = favorites.findIndex(f => f.id === id);
 
-     if (index === -1) {
-        favorites.push(id);
-     } else {
-       favorites.splice(index, 1);
-     }
+      if (index === -1) {
 
-     this.storageService.setFavorites(favorites);
+        favorites.push({
+          id,
+          rating: 0
+        });
+        } else {
+          favorites.splice(index, 1);
+        }
 
-     this.favorites = favorites;
+      this.storageService.setFavorites(favorites);
+      this.favorites = favorites;
+  }
+
+  isFavorite(id: string): boolean {
+    return this.favorites.some(f => f.id === id);
   }
 }
