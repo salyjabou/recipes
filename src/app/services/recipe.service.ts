@@ -13,4 +13,7 @@ export class RecipeService {
       return this.http.get(`${this.apiUrl}/search.php?s=a`);
   }
 
+  getRecipeById(id: string) {
+  return this.http.get<any>(`${this.apiUrl}/lookup.php?i=${id}`);
+  }
 }

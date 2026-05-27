@@ -1,6 +1,6 @@
 <div class="recipes-container">
 @for(recipe of recipes; track recipe.idMeal) {
-  <div class="recipe-card">
+  <div class="recipe-card" (click)="goToDetails(recipe.idMeal)">
     <img [src]="recipe.strMealThumb" [alt]="recipe.strMeal"/>
     <div class="content">
       <h2> {{ recipe.strMeal }} </h2>
